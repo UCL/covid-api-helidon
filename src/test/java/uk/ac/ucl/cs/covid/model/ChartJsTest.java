@@ -5,6 +5,7 @@ import jakarta.json.bind.JsonbBuilder;
 import org.junit.jupiter.api.Test;
 import uk.ac.ucl.cs.covid.model.chartjs.Data;
 import uk.ac.ucl.cs.covid.model.chartjs.Dataset;
+import uk.ac.ucl.cs.covid.model.chartjs.Root;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -34,6 +35,20 @@ public class ChartJsTest {
     data.setScoreValue(0.1d);
     instance.setData(List.of(data));
     String expected = String.format("{\"data\":[{\"x\":\"%s\",\"y\":0.1}]}", LocalDate.now());
+    String actual = JSONB.toJson(instance);
+    assertThat(actual, equalTo(expected));
+  }
+
+  @Test
+  public void testRoot() {
+    Root instance = new Root();
+    Dataset dataset = new Dataset();
+    Data data = new Data();
+    data.setScoreDate(LocalDate.now());
+    data.setScoreValue(0.1d);
+    dataset.setData(List.of(data));
+    instance.setDatasets(List.of(dataset));
+    String expected = String.format("{\"datasets\":[{\"data\":[{\"x\":\"2022-08-02\",\"y\":0.1}]}]}", LocalDate.now());
     String actual = JSONB.toJson(instance);
     assertThat(actual, equalTo(expected));
   }
