@@ -24,7 +24,7 @@ public class Root {
 
   /**
    * Sets the collection of datasets.
-   * @param aDataset the datasets
+   * @param aDatasetList the datasets
    */
   public void setDatasets(final List<Dataset> aDatasetList) {
     this.datasets = Collections.unmodifiableList(aDatasetList);
