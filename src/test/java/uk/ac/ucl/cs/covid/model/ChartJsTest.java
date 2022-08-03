@@ -48,7 +48,7 @@ public class ChartJsTest {
     data.setScoreValue(0.1d);
     dataset.setData(List.of(data));
     instance.setDatasets(List.of(dataset));
-    String expected = String.format("{\"datasets\":[{\"data\":[{\"x\":\"2022-08-02\",\"y\":0.1}]}]}", LocalDate.now());
+    String expected = String.format("{\"datasets\":[{\"data\":[{\"x\":\"%s\",\"y\":0.1}]}]}", LocalDate.now());
     String actual = JSONB.toJson(instance);
     assertThat(actual, equalTo(expected));
   }

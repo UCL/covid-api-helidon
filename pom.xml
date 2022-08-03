@@ -122,6 +122,7 @@
         <artifactId>jandex-maven-plugin</artifactId>
         <executions>
           <execution>
+            <?m2e ignore?>
             <id>make-index</id>
           </execution>
         </executions>
@@ -161,6 +162,11 @@
               <groupId>com.h3xstream.findsecbugs</groupId>
               <artifactId>findsecbugs-plugin</artifactId>
               <version>${version.plugin.findsecbugs}</version>
+            </plugin>
+            <plugin>
+              <groupId>com.mebigfatguy.fb-contrib</groupId>
+              <artifactId>fb-contrib</artifactId>
+              <version>7.4.7</version>
             </plugin>
           </plugins>
         </configuration>
