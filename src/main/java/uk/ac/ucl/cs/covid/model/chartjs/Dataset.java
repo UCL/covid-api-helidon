@@ -1,5 +1,6 @@
 package uk.ac.ucl.cs.covid.model.chartjs;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -22,7 +23,7 @@ public class Dataset {
    * @return The collection of data points
    */
   public List<Data> getData() {
-    return data;
+    return Collections.unmodifiableList(data);
   }
 
   /**
@@ -30,6 +31,6 @@ public class Dataset {
    * @param aData The collection of data points
    */
   public void setData(final List<Data> aData) {
-    this.data = aData;
+    this.data = Collections.unmodifiableList(aData);
   }
 }

@@ -24,6 +24,8 @@
     <version.plugin.spotbugs>4.7.1.1</version.plugin.spotbugs>
     <!-- https://mvnrepository.com/artifact/com.h3xstream.findsecbugs/findsecbugs-plugin -->
     <version.plugin.findsecbugs>1.12.0</version.plugin.findsecbugs>
+    <!-- https://mvnrepository.com/artifact/com.mebigfatguy.fb-contrib/fb-contrib -->
+    <version.plugin.fbcontrib>7.4.7</version.plugin.fbcontrib>
   </properties>
 
   <dependencies>
@@ -166,7 +168,7 @@
             <plugin>
               <groupId>com.mebigfatguy.fb-contrib</groupId>
               <artifactId>fb-contrib</artifactId>
-              <version>7.4.7</version>
+              <version>${version.plugin.fbcontrib}</version>
             </plugin>
           </plugins>
         </configuration>
