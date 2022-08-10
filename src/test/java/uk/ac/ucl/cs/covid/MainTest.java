@@ -32,7 +32,6 @@ public class MainTest {
     @Inject
     private WebTarget target;
 
-
     @Test
     public void testMicroprofileMetrics() {
         String message = target.path("simple-greet/Joe")
@@ -78,7 +77,7 @@ public class MainTest {
                 .get(Message.class);
         assertThat(message.getMessage(), is("Hello World!"));
     }
-                
+
     @Test
     public void testGreetings() throws Exception {
         Message jsonMessage = target
@@ -100,5 +99,5 @@ public class MainTest {
                 .get(Message.class);
         assertThat(jsonMessage.getMessage(), is("Hola Jose!"));
     }
-                
+
 }
