@@ -1,19 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xmlns="http://maven.apache.org/POM/4.0.0"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  xmlns="http://maven.apache.org/POM/4.0.0"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>io.helidon.applications</groupId>
     <artifactId>helidon-mp</artifactId>
     <version>3.0.0</version>
-    <relativePath/>
+    <relativePath />
   </parent>
   <groupId>uk.ac.ucl.cs.covid</groupId>
   <artifactId>covid-api-helidon</artifactId>
   <version>1.0-SNAPSHOT</version>
 
   <properties>
+    <!-- https://mvnrepository.com/artifact/org.eclipse.persistence -->
+    <version.eclipselink>3.0.2</version.eclipselink>
+    <!-- https://mvnrepository.com/artifact/org.osgi/org.osgi.annotation.bundle -->
+    <version.annotationbundle>2.0.0</version.annotationbundle>
     <!-- https://mvnrepository.com/artifact/com.puppycrawl.tools/checkstyle -->
     <version.checkstyle>10.3.2</version.checkstyle>
     <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-checkstyle-plugin -->
@@ -26,6 +30,10 @@
     <version.plugin.findsecbugs>1.12.0</version.plugin.findsecbugs>
     <!-- https://mvnrepository.com/artifact/com.mebigfatguy.fb-contrib/fb-contrib -->
     <version.plugin.fbcontrib>7.4.7</version.plugin.fbcontrib>
+    <!-- https://mvnrepository.com/artifact/org.codehaus.mojo/exec-maven-plugin -->
+    <version.plugin.exec>3.1.0</version.plugin.exec>
+    <!-- https://mvnrepository.com/artifact/org.bsc.maven/maven-processor-plugin -->
+    <version.plugin.processor>4.5</version.plugin.processor>
   </properties>
 
   <dependencies>
@@ -86,28 +94,41 @@
     <dependency>
       <groupId>io.helidon.integrations.cdi</groupId>
       <artifactId>helidon-integrations-cdi-datasource-hikaricp</artifactId>
-      <scope>runtime</scope> 
+      <scope>runtime</scope>
     </dependency>
     <dependency>
       <groupId>com.h2database</groupId>
       <artifactId>h2</artifactId>
-      <scope>test</scope> 
+      <scope>test</scope>
     </dependency>
+    <!-- Jakarta transactions integration -->
+    <dependency>
+      <groupId>jakarta.transaction</groupId>
+      <artifactId>jakarta.transaction-api</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>io.helidon.integrations.cdi</groupId>
+      <artifactId>helidon-integrations-cdi-jta-weld</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+    <!-- Jakarta persistence -->
     <dependency>
       <groupId>jakarta.persistence</groupId>
       <artifactId>jakarta.persistence-api</artifactId>
-      <scope>provided</scope> 
+      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>io.helidon.integrations.cdi</groupId>
       <artifactId>helidon-integrations-cdi-jpa</artifactId>
-      <scope>runtime</scope> 
+      <scope>runtime</scope>
     </dependency>
     <dependency>
       <groupId>io.helidon.integrations.cdi</groupId>
       <artifactId>helidon-integrations-cdi-eclipselink</artifactId>
-      <scope>runtime</scope> 
+      <scope>runtime</scope>
     </dependency>
+    <!-- Testing -->
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter-api</artifactId>
@@ -123,14 +144,11 @@
       <artifactId>hamcrest-all</artifactId>
       <scope>test</scope>
     </dependency>
-    <!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-simple -->
-<dependency>
-    <groupId>org.slf4j</groupId>
-    <artifactId>slf4j-simple</artifactId>
-    <version>1.7.36</version>
-    <scope>test</scope>
-</dependency>
-    
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-simple</artifactId>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
 
   <build>
@@ -164,18 +182,97 @@
         </executions>
       </plugin>
       <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <compilerArgument>-proc:none</compilerArgument>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.bsc.maven</groupId>
+        <artifactId>maven-processor-plugin</artifactId>
+        <version>${version.plugin.processor}</version>
+        <executions>
+          <execution>
+            <id>eclipselink-modelgen</id>
+            <goals>
+              <goal>process</goal>
+            </goals>
+            <phase>generate-sources</phase>
+            <configuration>
+              <processors>
+                <processor>org.eclipse.persistence.internal.jpa.modelgen.CanonicalModelProcessor</processor>
+              </processors>
+              <sourceDirectory>${project.basedir}/src/main/java</sourceDirectory>
+              <!-- <compilerArguments>-Aeclipselink.persistencexml=${project.basedir}/src/main/resources/META-INF/persistence.xml</compilerArguments> -->
+              <options>
+                <eclipselink.persistencexml>${project.basedir}/src/main/resources/META-INF/persistence.xml</eclipselink.persistencexml>
+                <eclipselink.canonicalmodel.generate_timestamp>false</eclipselink.canonicalmodel.generate_timestamp>
+                <eclipselink.canonicalmodel.generate_comments>false</eclipselink.canonicalmodel.generate_comments>
+              </options>
+            </configuration>
+          </execution>
+        </executions>
+        <dependencies>
+          <dependency>
+            <groupId>org.eclipse.persistence</groupId>
+            <artifactId>org.eclipse.persistence.jpa.modelgen.processor</artifactId>
+            <version>${version.eclipselink}</version>
+          </dependency>       
+          <dependency>
+            <groupId>org.osgi</groupId>
+            <artifactId>org.osgi.annotation.bundle</artifactId>
+            <version>${version.annotationbundle}</version>
+          </dependency>
+          <dependency>
+            <groupId>org.eclipse.persistence</groupId>
+            <artifactId>org.eclipse.persistence.core</artifactId>
+            <version>${version.eclipselink}</version>
+          </dependency>
+        </dependencies>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+        <version>${version.plugin.exec}</version>
+        <executions>
+          <execution>
+            <id>weave</id>
+            <phase>process-classes</phase>
+            <goals>
+              <goal>java</goal>
+            </goals>
+            <configuration combine.self="override">
+              <classpathScope>compile</classpathScope>
+              <includePluginDependencies>true</includePluginDependencies>
+              <executableDependency>
+                <groupId>org.eclipse.persistence</groupId>
+                <artifactId>eclipselink</artifactId>
+              </executableDependency>
+              <mainClass>org.eclipse.persistence.tools.weaving.jpa.StaticWeave</mainClass>
+              <arguments>
+                <argument>-loglevel</argument>
+                <argument>INFO</argument>
+                <argument>-persistenceinfo</argument>
+                <argument>${project.build.outputDirectory}</argument>
+                <argument>${project.build.outputDirectory}</argument>
+                <argument>${project.build.outputDirectory}</argument>
+              </arguments>
+            </configuration>
+          </execution>
+        </executions>
+        <dependencies>
+          <dependency>
+            <groupId>org.eclipse.persistence</groupId>
+            <artifactId>eclipselink</artifactId>
+            <version>${version.eclipselink}</version>
+          </dependency>
+        </dependencies>
+      </plugin>
+      <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
         <configuration>
           <systemPropertyVariables>
-          <!-- 
-            <ddl.path>
-            ${project.basedir}/src/test/resources/test-h2.ddl
-            </ddl.path>
-            <javax.sql.DataSource.deviceRegistrationDS.dataSource.url>
-              jdbc:h2:mem:test;INIT=SET TRACE_LEVEL_FILE=4\\;RUNSCRIPT FROM '${project.basedir}/src/test/resources/test-h2.sql\\;SET DB_CLOSE_DELAY=-1;'
-            </javax.sql.DataSource.deviceRegistrationDS.dataSource.url>
-             -->
             <eclipselink.target-database>
               org.eclipse.persistence.platform.database.H2Platform
             </eclipselink.target-database>

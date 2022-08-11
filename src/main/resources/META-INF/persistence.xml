@@ -5,12 +5,10 @@
   xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence
                       https://jakarta.ee/xml/ns/persistence/persistence_3_0.xsd"
   version="3.0">
-  <persistence-unit name="covid PU" transaction-type="JTA">
-    <description>Persistence unit for the registration of devices</description>
+  <persistence-unit name="covidPU" transaction-type="JTA">
+    <description>Persistence unit for the COVID dashboard</description>
     <jta-data-source>covidDS</jta-data-source>
-    <class>uk.co.damoclesuk.registration.persistence.CameraEntity</class>
-    <class>uk.co.damoclesuk.registration.persistence.DeviceEntity</class>
-    <class>uk.co.damoclesuk.registration.persistence.SubscriptionEntity</class>
+    <class>uk.ac.ucl.ac.covid.ModelScoresEntity</class>
     <properties>
       <property name="eclipselink.deploy-on-startup" value="true"/>
       <property name="eclipselink.jdbc.native-sql" value="true"/>
