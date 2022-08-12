@@ -206,6 +206,7 @@
               <!-- <compilerArguments>-Aeclipselink.persistencexml=${project.basedir}/src/main/resources/META-INF/persistence.xml</compilerArguments> -->
               <options>
                 <eclipselink.persistencexml>${project.basedir}/src/main/resources/META-INF/persistence.xml</eclipselink.persistencexml>
+                <eclipselink.canonicalmodel.suffix>Metamodel</eclipselink.canonicalmodel.suffix>
                 <eclipselink.canonicalmodel.generate_timestamp>false</eclipselink.canonicalmodel.generate_timestamp>
                 <eclipselink.canonicalmodel.generate_comments>false</eclipselink.canonicalmodel.generate_comments>
               </options>
