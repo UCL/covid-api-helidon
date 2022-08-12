@@ -270,21 +270,6 @@
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-surefire-plugin</artifactId>
-        <configuration>
-          <systemPropertyVariables>
-            <eclipselink.target-database>
-              org.eclipse.persistence.platform.database.H2Platform
-            </eclipselink.target-database>
-            <eclipselink.ddl-generation>
-              <!-- create-or-extend-tables -->
-              none
-            </eclipselink.ddl-generation>
-          </systemPropertyVariables>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-checkstyle-plugin</artifactId>
         <version>${version.plugin.checkstyle}</version>
         <configuration>
