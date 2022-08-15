@@ -28,4 +28,27 @@ public class ModelEntity {
     this.id = id;
   }
 
+  public String getModelName() {
+    return modelName;
+  }
+
+  public void setModelName(String aModelName) {
+    this.modelName = aModelName;
+  }
+
+  public Boolean getDisplayed() {
+    return isDisplayed;
+  }
+
+  public void setDisplayed(Boolean displayed) {
+    isDisplayed = displayed;
+  }
+
+  public String getCountryIsoA3() {
+    return countryIsoA3;
+  }
+
+  public void setCountryIsoA3(String aCountryIsoA3) {
+    this.countryIsoA3 = aCountryIsoA3;
+  }
 }

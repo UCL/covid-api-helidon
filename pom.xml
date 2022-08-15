@@ -128,6 +128,12 @@
       <artifactId>helidon-integrations-cdi-eclipselink</artifactId>
       <scope>runtime</scope>
     </dependency>
+    <dependency>
+      <groupId>org.eclipse.persistence</groupId>
+      <artifactId>eclipselink</artifactId>
+      <version>${version.eclipselink}</version>
+      <scope>runtime</scope>
+    </dependency>
     <!-- Testing -->
     <dependency>
       <groupId>org.junit.jupiter</groupId>

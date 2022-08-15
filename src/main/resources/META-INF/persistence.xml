@@ -8,7 +8,8 @@
   <persistence-unit name="covidPU" transaction-type="JTA">
     <description>Persistence unit for the COVID dashboard</description>
     <jta-data-source>covidDS</jta-data-source>
-    <class>uk.ac.ucl.ac.covid.ModelScoresEntity</class>
+    <class>uk.ac.ucl.cs.covid.persistence.ModelScoresEntity</class>
+    <class>uk.ac.ucl.cs.covid.persistence.ModelEntity</class>
     <properties>
       <property name="eclipselink.deploy-on-startup" value="true"/>
       <property name="eclipselink.jdbc.native-sql" value="true"/>
