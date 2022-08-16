@@ -134,6 +134,15 @@
       <version>${version.eclipselink}</version>
       <scope>runtime</scope>
     </dependency>
+    <!-- Jakarta bean validation -->
+    <dependency>
+      <groupId>org.glassfish.jersey.ext</groupId>
+      <artifactId>jersey-bean-validation</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.helidon.microprofile.bean-validation</groupId>
+      <artifactId>helidon-microprofile-bean-validation</artifactId>
+    </dependency>
     <!-- Testing -->
     <dependency>
       <groupId>org.junit.jupiter</groupId>

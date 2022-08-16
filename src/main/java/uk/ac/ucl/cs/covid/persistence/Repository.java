@@ -25,4 +25,13 @@ public class Repository {
     return result;
   }
 
+  public ModelEntity findModelForCountryIsoA3(final String countryIsoA3) {
+    final CriteriaQuery<DefaultModelEntity> query =
+      new CriteriaQueryBuilder(entityManager)
+        .findDefaultModelForCountryIsoA3(countryIsoA3);
+    final DefaultModelEntity result = entityManager.createQuery(query)
+      .getSingleResult();
+    return result.getModel();
+  }
+
 }
