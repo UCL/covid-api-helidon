@@ -1,10 +1,7 @@
 package uk.ac.ucl.cs.covid.persistence;
 
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.criteria.CriteriaBuilder;
-import jakarta.persistence.criteria.CriteriaQuery;
-import jakarta.persistence.criteria.Predicate;
-import jakarta.persistence.criteria.Root;
+import jakarta.persistence.criteria.*;
 
 public class CriteriaQueryBuilder {
 
@@ -18,14 +15,15 @@ public class CriteriaQueryBuilder {
     this.criteriaBuilder = entityManager.getCriteriaBuilder();
   }
 
-  public CriteriaQuery<ModelScoresEntity> findModelScoresForId(
+  public CriteriaQuery<ModelScoresEntity> findModelScoresForModelId(
     final Integer modelId
   ) {
     final CriteriaQuery<ModelScoresEntity> query = criteriaBuilder
       .createQuery(ModelScoresEntity.class);
     final Root<ModelScoresEntity> root = query.from(ModelScoresEntity.class);
+    final Join<ModelScoresEntity, ModelEntity> join = root.join(ModelScoresEntityMetamodel.model);
     final Predicate predicate = criteriaBuilder.equal(
-      root.get(ModelScoresEntityMetamodel.id),
+      join.get(ModelEntityMetamodel.id),
       modelId
     );
     return query.where(predicate);

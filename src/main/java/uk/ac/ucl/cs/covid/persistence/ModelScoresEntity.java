@@ -1,9 +1,6 @@
 package uk.ac.ucl.cs.covid.persistence;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -36,5 +33,8 @@ public class ModelScoresEntity {
   @Column(name = "HISTORICAL_TREND_UPPER", nullable = false)
   private Double historicalTrendUpper;
 
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "MODEL_ID", referencedColumnName = "ID")
+  private ModelEntity model;
 
 }

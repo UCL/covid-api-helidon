@@ -18,7 +18,7 @@ public class Repository {
   ) {
     final CriteriaQuery<ModelScoresEntity> query =
       new CriteriaQueryBuilder(entityManager)
-        .findModelScoresForId(modelId);
+        .findModelScoresForModelId(modelId);
     final List<ModelScoresEntity> result = entityManager
       .createQuery(query)
       .getResultList();
