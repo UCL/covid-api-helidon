@@ -18,9 +18,17 @@ public class CountryResource {
    * ISO country code.
    * 3-letter format
    */
-  @PathParam("countryCode")
-  @Size(min = 3, max = 3)
   private String countryCode;
+
+  @PathParam("countryCode")
+  public void setCountryCode(String aCountryCode) {
+    this.countryCode = aCountryCode;
+  }
+
+  @Size(min = 3, max = 3)
+  public String getCountryCode() {
+    return countryCode;
+  }
 
   /**
    * Controller to call queries and build response objects.

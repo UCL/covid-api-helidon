@@ -27,6 +27,13 @@ public class ResourceTest {
   }
 
   @Test
+  public void testGetDataForCountryBadRequest() {
+    Response response = target.path("/country/AAAA/data")
+        .request().get();
+    assertThat(response.getStatus(), is(400));
+  }
+
+  @Test
   public void testGetDataForCountryJsonSizes() {
     Root response = target.path("/country/GBR/data")
         .request().get(Root.class);
@@ -34,7 +41,6 @@ public class ResourceTest {
     IntStream.range(0, 5).forEachOrdered(n -> {
       assertThat(response.getDatasets().get(n).getData().size(), is(2));
       });
-
   }
 
 }
