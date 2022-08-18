@@ -5,9 +5,11 @@ import java.util.List;
 
 import jakarta.enterprise.context.Dependent;
 import jakarta.inject.Inject;
+import jakarta.ws.rs.NotFoundException;
 import uk.ac.ucl.cs.covid.model.chartjs.Data;
 import uk.ac.ucl.cs.covid.model.chartjs.Dataset;
 import uk.ac.ucl.cs.covid.model.chartjs.Root;
+import uk.ac.ucl.cs.covid.persistence.DefaultModelEntity;
 import uk.ac.ucl.cs.covid.persistence.ModelEntity;
 import uk.ac.ucl.cs.covid.persistence.ModelScoresEntity;
 import uk.ac.ucl.cs.covid.persistence.Repository;
@@ -26,7 +28,10 @@ public class ResourceController {
   }
 
   public Root getChartJsRoot(final String countryIsoA3) {
-    ModelEntity model = repository.findModelForCountryIsoA3(countryIsoA3);
+    DefaultModelEntity defaultModel = repository
+        .findModel(countryIsoA3)
+        .orElseThrow(NotFoundException::new);
+    ModelEntity model = defaultModel.getModel();
     List<ModelScoresEntity> scoresList = repository
         .findAllModelScoresForModelId(model.getId());
     Dataset weighted = new Dataset();

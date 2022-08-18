@@ -3,9 +3,11 @@ package uk.ac.ucl.cs.covid.persistence;
 import jakarta.enterprise.context.Dependent;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.CriteriaQuery;
 
 import java.util.List;
+import java.util.Optional;
 
 @Dependent
 public class Repository {
@@ -25,13 +27,14 @@ public class Repository {
     return result;
   }
 
-  public ModelEntity findModelForCountryIsoA3(final String countryIsoA3) {
+  public Optional<DefaultModelEntity> findModel(final String countryIsoA3) {
     final CriteriaQuery<DefaultModelEntity> query =
       new CriteriaQueryBuilder(entityManager)
         .findDefaultModelForCountryIsoA3(countryIsoA3);
-    final DefaultModelEntity result = entityManager.createQuery(query)
-      .getSingleResult();
-    return result.getModel();
+    final TypedQuery<DefaultModelEntity> typedQuery = entityManager
+        .createQuery(query);
+    typedQuery.setMaxResults(1);
+    return typedQuery.getResultStream().findFirst();
   }
 
 }

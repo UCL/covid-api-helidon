@@ -34,6 +34,13 @@ public class ResourceTest {
   }
 
   @Test
+  public void testGetDataForCountryNotFound() {
+    Response response = target.path("/country/AAA/data")
+        .request().get();
+    assertThat(response.getStatus(), is(404));
+  }
+
+  @Test
   public void testGetDataForCountryJsonSizes() {
     Root response = target.path("/country/GBR/data")
         .request().get(Root.class);
