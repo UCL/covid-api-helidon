@@ -10,6 +10,7 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import uk.ac.ucl.cs.covid.model.chartjs.Root;
 
+@Path("country/{countryCode}")
 @RequestScoped
 public class CountryResource {
 
@@ -17,7 +18,7 @@ public class CountryResource {
    * ISO country code.
    * 3-letter format
    */
-  @PathParam("{countryCode}")
+  @PathParam("countryCode")
   @Size(min = 3, max = 3)
   private String countryCode;
 

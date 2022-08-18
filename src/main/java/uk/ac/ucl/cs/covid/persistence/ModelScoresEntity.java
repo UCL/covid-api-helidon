@@ -37,4 +37,27 @@ public class ModelScoresEntity {
   @JoinColumn(name = "MODEL_ID", referencedColumnName = "ID")
   private ModelEntity model;
 
+  public LocalDate getScoreDate() {
+    return scoreDate;
+  }
+
+  public Double getWeighted() {
+    return weighted;
+  }
+
+  public Double getWeightedDebiased() {
+    return weightedDebiased;
+  }
+
+  public Double getHistoricalTrend() {
+    return historicalTrend;
+  }
+
+  public Double getHistoricalTrendLower() {
+    return historicalTrendLower;
+  }
+
+  public Double getHistoricalTrendUpper() {
+    return historicalTrendUpper;
+  }
 }

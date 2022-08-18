@@ -1,5 +1,6 @@
 package uk.ac.ucl.cs.covid.model.chartjs;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -11,7 +12,7 @@ public class Dataset {
   /**
    * The collection of data points in this data set.
    */
-  private List<Data> data;
+  private List<Data> data = new ArrayList<>();
 
   /**
    * Default constructor for JSONB.
@@ -32,5 +33,13 @@ public class Dataset {
    */
   public void setData(final List<Data> aData) {
     this.data = Collections.unmodifiableList(aData);
+  }
+
+  /**
+   * Adds a data point to this data set.
+   * @param datapoint The X,Y coordinate
+   */
+  public void addData(final Data datapoint) {
+    this.data.add(datapoint);
   }
 }
