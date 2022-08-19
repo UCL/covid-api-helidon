@@ -1,10 +1,18 @@
 package uk.ac.ucl.cs.covid.persistence;
 
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.criteria.*;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Join;
+import jakarta.persistence.criteria.Predicate;
+import jakarta.persistence.criteria.Root;
+
 
 public class CriteriaQueryBuilder {
 
+  /**
+   * A builder of JPA statements using the Criteria API.
+   */
   private final CriteriaBuilder criteriaBuilder;
 
   /**
@@ -15,7 +23,12 @@ public class CriteriaQueryBuilder {
     this.criteriaBuilder = entityManager.getCriteriaBuilder();
   }
 
-  public CriteriaQuery<ModelScoresEntity> findModelScoresForModelId (
+  /**
+   * A Criteria API query to find the scores for a given model.
+   * @param modelId the identifier of a model.
+   * @return the select query to find the scores for a given model.
+   */
+  public CriteriaQuery<ModelScoresEntity> findModelScoresForModelId(
     final Integer modelId
   ) {
     final CriteriaQuery<ModelScoresEntity> query = criteriaBuilder
@@ -30,7 +43,12 @@ public class CriteriaQueryBuilder {
     return query.where(predicate);
   }
 
-  public CriteriaQuery<DefaultModelEntity> findDefaultModelForCountryIsoA3 (
+  /**
+   * A Criteria API query to find the default model for a given country.
+   * @param countryIsoA3 the ISO A3 code of a country.
+   * @return the select query to find the default model.
+   */
+  public CriteriaQuery<DefaultModelEntity> findDefaultModelForCountryIsoA3(
     final String countryIsoA3
   ) {
     final CriteriaQuery<DefaultModelEntity> query = criteriaBuilder

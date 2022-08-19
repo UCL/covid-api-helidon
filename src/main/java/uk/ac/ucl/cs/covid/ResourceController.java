@@ -14,19 +14,38 @@ import uk.ac.ucl.cs.covid.persistence.ModelEntity;
 import uk.ac.ucl.cs.covid.persistence.ModelScoresEntity;
 import uk.ac.ucl.cs.covid.persistence.Repository;
 
+/**
+ * Controller for accessing data on a country level.
+ */
 @Dependent
 public class ResourceController {
 
+  /**
+   * CDI bean with repository of statements for accesssing JPA entities.
+   */
   @Inject
   private Repository repository;
 
-  private Data buildDataPoint(LocalDate scoreDate, Double scoreValue) {
+  /**
+   * Build a data point.
+   * @param scoreDate The date of the score.
+   * @param scoreValue The value of the score.
+   * @return a data point.
+   */
+  private Data buildDataPoint(
+      final LocalDate scoreDate, final Double scoreValue
+      ) {
     Data data = new Data();
     data.setScoreDate(scoreDate);
     data.setScoreValue(scoreValue);
     return data;
   }
 
+  /**
+   * Construct a message based on {@link uk.ac.ucl.cs.covid.model.chartjs.Root}.
+   * @param countryIsoA3 the ISO A3 code of a country
+   * @return the response message.
+   */
   public Root getChartJsRoot(final String countryIsoA3) {
     DefaultModelEntity defaultModel = repository
         .findModel(countryIsoA3)

@@ -10,6 +10,13 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import uk.ac.ucl.cs.covid.model.chartjs.Root;
 
+/**
+ * Resource of country specific data.
+ * <p>
+ * <code>GET /country/{countryCode}/data</code> All model scores for a given
+ * country.
+ * </p>
+ */
 @Path("country/{countryCode}")
 @RequestScoped
 public class CountryResource {
@@ -20,12 +27,25 @@ public class CountryResource {
    */
   private String countryCode;
 
+  /**
+   * The expected size of the country code.
+   */
+  private static final int COUNTRY_CODE_SIZE = 3;
+
+  /**
+   * Sets the ISO A3 code of a country.
+   * @param aCountryCode the ISO A3 code.
+   */
   @PathParam("countryCode")
-  public void setCountryCode(String aCountryCode) {
+  public void setCountryCode(final String aCountryCode) {
     this.countryCode = aCountryCode;
   }
 
-  @Size(min = 3, max = 3)
+  /**
+   * Gets and validates the ISO A3 country code.
+   * @return the ISO A3 code.
+   */
+  @Size(min = COUNTRY_CODE_SIZE, max = COUNTRY_CODE_SIZE)
   public String getCountryCode() {
     return countryCode;
   }
