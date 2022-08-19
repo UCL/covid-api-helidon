@@ -39,4 +39,30 @@ public class MainTest {
         assertThat(response.getStatus(), is(200));
     }
 
+    @Test
+    public void testHealthLive() {
+      Response response = target
+          .path("health/live")
+          .request()
+          .get();
+      assertThat(response.getStatus(), is(200));
+    }
+
+    @Test
+    public void testHealthReady() {
+      Response response = target
+          .path("health/ready")
+          .request()
+          .get();
+      assertThat(response.getStatus(), is(200));
+    }
+
+    @Test
+    public void testHealthStarted() {
+      Response response = target
+          .path("health/started")
+          .request()
+          .get();
+      assertThat(response.getStatus(), is(200));
+    }
 }
