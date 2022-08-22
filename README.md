@@ -1,11 +1,14 @@
 # covid-api-helidon
 
-Minimal Helidon MP project suitable to start from scratch.
+COVID Dashboard API Component
+
+![GitHub release](https://img.shields.io/github/v/release/UCL/covid-api-helidon)
 
 ## Build and run
 
 
 With JDK17+
+
 ```bash
 mvn package
 java -jar target/covid-api-helidon.jar
@@ -122,3 +125,14 @@ mvn package -Pjlink-image -Djlink.image.addClassDataSharingArchive=false
 
 For more information on available configuration options see the helidon-maven-plugin documentation.
                                 
+
+## Reporting bugs
+
+Please use the Github issue tracker for any bugs or feature suggestions:
+
+[https://github.com/UCL/covid-api-helidon/issues](https://github.com/UCL/covid-api-helidon/issues)
+
+
+## Authors
+
+- David Guzman (Github: [@david-guzman](https://github.com/david-guzman))
