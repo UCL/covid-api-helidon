@@ -15,7 +15,7 @@
 
   <properties>
     <!-- https://mvnrepository.com/artifact/org.eclipse.persistence -->
-    <version.eclipselink>3.0.2</version.eclipselink>
+    <version.eclipselink>3.0.3</version.eclipselink>
     <!-- https://mvnrepository.com/artifact/org.osgi/org.osgi.annotation.bundle -->
     <version.annotationbundle>2.0.0</version.annotationbundle>
     <!-- https://mvnrepository.com/artifact/com.puppycrawl.tools/checkstyle -->
