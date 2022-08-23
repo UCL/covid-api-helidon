@@ -52,4 +52,17 @@ public class Repository {
     return typedQuery.getResultStream().findFirst();
   }
 
+  /**
+   * Query to find the number of cases per 100K population per country.
+   * @return a {@link List} with the number of cases. It cannot be empty.
+   */
+  public List<CountryTotalsEntity> findNumberCases100k() {
+    final CriteriaQuery<CountryTotalsEntity> query =
+        new CriteriaQueryBuilder(entityManager)
+          .findCountryTotals();
+    final TypedQuery<CountryTotalsEntity> typedQuery = entityManager
+        .createQuery(query);
+    return typedQuery.getResultList();
+  }
+
 }

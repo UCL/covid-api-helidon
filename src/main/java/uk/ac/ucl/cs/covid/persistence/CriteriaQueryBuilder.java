@@ -61,4 +61,16 @@ public class CriteriaQueryBuilder {
     return query.where(predicate);
   }
 
+  /**
+   * A Criteria API query to retrieve the number of COVID cases per 100K
+   * population in a country.
+   * @return the select query to retrieve the number of cases per country.
+   */
+  public CriteriaQuery<CountryTotalsEntity> findCountryTotals() {
+    final CriteriaQuery<CountryTotalsEntity> query = criteriaBuilder
+        .createQuery(CountryTotalsEntity.class);
+    query.from(CountryTotalsEntity.class);
+    return query;
+  }
+
 }

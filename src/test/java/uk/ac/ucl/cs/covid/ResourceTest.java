@@ -50,4 +50,11 @@ public class ResourceTest {
       });
   }
 
+  @Test
+  public void testGetDataForWorldOk() {
+    Response response = target.path("/world")
+        .request().get();
+    assertThat(response.getStatus(), is(200));
+  }
+
 }

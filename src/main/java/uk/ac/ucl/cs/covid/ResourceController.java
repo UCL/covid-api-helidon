@@ -2,13 +2,16 @@ package uk.ac.ucl.cs.covid;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import jakarta.enterprise.context.Dependent;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.NotFoundException;
+import uk.ac.ucl.cs.covid.model.CountryTotals;
 import uk.ac.ucl.cs.covid.model.chartjs.Data;
 import uk.ac.ucl.cs.covid.model.chartjs.Dataset;
 import uk.ac.ucl.cs.covid.model.chartjs.Root;
+import uk.ac.ucl.cs.covid.persistence.CountryTotalsEntity;
 import uk.ac.ucl.cs.covid.persistence.DefaultModelEntity;
 import uk.ac.ucl.cs.covid.persistence.ModelEntity;
 import uk.ac.ucl.cs.covid.persistence.ModelScoresEntity;
@@ -90,5 +93,17 @@ public class ResourceController {
             historicalUpper
             ));
     return chartJsRoot;
+  }
+
+  public List<CountryTotals> getTotalsPerCountry() {
+    final List<CountryTotalsEntity> countryTotalsList = repository
+        .findNumberCases100k();
+    return countryTotalsList.stream()
+      .map((CountryTotalsEntity e) -> {
+        CountryTotals c = new CountryTotals();
+        c.setCountryIsoA3(e.getCountryIsoA3());
+        c.setCasesPer100K(e.getCasesPer100K());
+        return c;
+      }).collect(Collectors.toList());
   }
 }

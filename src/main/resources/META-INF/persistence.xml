@@ -11,6 +11,7 @@
     <class>uk.ac.ucl.cs.covid.persistence.ModelScoresEntity</class>
     <class>uk.ac.ucl.cs.covid.persistence.ModelEntity</class>
     <class>uk.ac.ucl.cs.covid.persistence.DefaultModelEntity</class>
+    <class>uk.ac.ucl.cs.covid.persistence.CountryTotalsEntity</class>
     <properties>
       <property name="eclipselink.deploy-on-startup" value="true"/>
       <property name="eclipselink.jdbc.native-sql" value="true"/>
