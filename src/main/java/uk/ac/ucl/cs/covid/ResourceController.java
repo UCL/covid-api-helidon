@@ -10,6 +10,7 @@ import jakarta.ws.rs.NotFoundException;
 import uk.ac.ucl.cs.covid.model.CountryTotals;
 import uk.ac.ucl.cs.covid.model.chartjs.Data;
 import uk.ac.ucl.cs.covid.model.chartjs.Dataset;
+import uk.ac.ucl.cs.covid.model.chartjs.DatasetLabel;
 import uk.ac.ucl.cs.covid.model.chartjs.Root;
 import uk.ac.ucl.cs.covid.persistence.CountryTotalsEntity;
 import uk.ac.ucl.cs.covid.persistence.DefaultModelEntity;
@@ -66,22 +67,27 @@ public class ResourceController {
           buildDataPoint(
               modelScores.getScoreDate(), modelScores.getWeighted()
               ));
+      weighted.setLabel(DatasetLabel.WEIGHTED);
       weightedDebiased.addData(
           buildDataPoint(
               modelScores.getScoreDate(), modelScores.getWeightedDebiased()
               ));
+      weightedDebiased.setLabel(DatasetLabel.WEIGHTED_DEBIASED);
       historicalTrend.addData(
           buildDataPoint(
               modelScores.getScoreDate(), modelScores.getHistoricalTrend()
               ));
+      historicalTrend.setLabel(DatasetLabel.HISTORICAL);
       historicalLower.addData(
           buildDataPoint(
               modelScores.getScoreDate(), modelScores.getHistoricalTrendLower()
               ));
+      historicalLower.setLabel(DatasetLabel.HISTORICAL_LOWER);
       historicalUpper.addData(
           buildDataPoint(
               modelScores.getScoreDate(), modelScores.getHistoricalTrendUpper()
               ));
+      historicalUpper.setLabel(DatasetLabel.HISTORICAL_UPPER);
     }
     Root chartJsRoot = new Root();
     chartJsRoot.setDatasets(
@@ -95,6 +101,11 @@ public class ResourceController {
     return chartJsRoot;
   }
 
+  /**
+   * Constructs a message based on
+   * {@link uk.ac.ucl.cs.covid.model.CountryTotals}.
+   * @return The totals per country as a List.
+   */
   public List<CountryTotals> getTotalsPerCountry() {
     final List<CountryTotalsEntity> countryTotalsList = repository
         .findNumberCases100k();

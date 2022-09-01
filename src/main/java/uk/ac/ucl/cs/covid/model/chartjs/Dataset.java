@@ -15,6 +15,11 @@ public class Dataset {
   private List<Data> data = new ArrayList<>();
 
   /**
+   * The label of the dataset to be displayed in a chart.
+   */
+  private DatasetLabel label;
+
+  /**
    * Default constructor for JSONB.
    */
   public Dataset() { }
@@ -42,4 +47,21 @@ public class Dataset {
   public void addData(final Data datapoint) {
     this.data.add(datapoint);
   }
+
+  /**
+   * Returns the label of this dataset.
+   * @return the label as a String
+   */
+  public DatasetLabel getLabel() {
+    return label;
+  }
+
+  /**
+   * Sets the label of this dataset.
+   * @param aLabel A non-empty String with the label
+   */
+  public void setLabel(final DatasetLabel aLabel) {
+    this.label = aLabel;
+  }
+
 }

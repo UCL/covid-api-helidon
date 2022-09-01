@@ -3,6 +3,8 @@ package uk.ac.ucl.cs.covid;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
+import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import org.junit.jupiter.api.Test;
@@ -11,6 +13,8 @@ import io.helidon.microprofile.tests.junit5.HelidonTest;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.client.WebTarget;
 import jakarta.ws.rs.core.Response;
+import uk.ac.ucl.cs.covid.model.chartjs.Dataset;
+import uk.ac.ucl.cs.covid.model.chartjs.DatasetLabel;
 import uk.ac.ucl.cs.covid.model.chartjs.Root;
 
 @HelidonTest
@@ -48,6 +52,24 @@ public class ResourceTest {
     IntStream.range(0, 5).forEachOrdered(n -> {
       assertThat(response.getDatasets().get(n).getData().size(), is(2));
       });
+  }
+
+  @Test
+  public void testGetDataForCountryJsonLabel() {
+    Root response = target.path("/country/GBR/data")
+      .request().get(Root.class);
+    List<String> expected = List.of(
+      "historical trend",
+      "historical trend lower",
+      "historical trend upper",
+      "weighted",
+      "weighted debiased"
+    );
+    List<String> actual = response.getDatasets().stream()
+      .map(d -> d.getLabel().toString())
+      .sorted()
+      .toList();
+    assertThat(actual, is(expected));
   }
 
   @Test

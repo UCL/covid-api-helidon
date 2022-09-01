@@ -10,7 +10,7 @@ public class CountryTotals {
   /**
    * Default constructor for JSONB.
    */
-  public CountryTotals() {}
+  public CountryTotals() { }
 
   /**
    * ISO A3 code for a country.
