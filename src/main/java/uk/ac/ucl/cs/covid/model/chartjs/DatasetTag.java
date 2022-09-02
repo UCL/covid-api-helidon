@@ -1,6 +1,6 @@
 package uk.ac.ucl.cs.covid.model.chartjs;
 
-public enum DatasetLabel {
+public enum DatasetTag {
 
   /**
    * Google search score with reduced media effects.
@@ -32,12 +32,15 @@ public enum DatasetLabel {
    */
   private final String label;
 
-  DatasetLabel(final String aLabel) {
+  DatasetTag(final String aLabel) {
     this.label = aLabel;
   }
 
-  @Override
-  public String toString() {
+  /**
+   * Obtains the label for this tag.
+   * @return the label as a String
+   */
+  public String getLabel() {
     return label;
   }
 }

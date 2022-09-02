@@ -10,7 +10,7 @@ import jakarta.ws.rs.NotFoundException;
 import uk.ac.ucl.cs.covid.model.CountryTotals;
 import uk.ac.ucl.cs.covid.model.chartjs.Data;
 import uk.ac.ucl.cs.covid.model.chartjs.Dataset;
-import uk.ac.ucl.cs.covid.model.chartjs.DatasetLabel;
+import uk.ac.ucl.cs.covid.model.chartjs.DatasetTag;
 import uk.ac.ucl.cs.covid.model.chartjs.Root;
 import uk.ac.ucl.cs.covid.persistence.CountryTotalsEntity;
 import uk.ac.ucl.cs.covid.persistence.DefaultModelEntity;
@@ -63,31 +63,41 @@ public class ResourceController {
     Dataset historicalLower = new Dataset();
     Dataset historicalUpper = new Dataset();
     for (ModelScoresEntity modelScores: scoresList) {
+      // WEIGHTED
       weighted.addData(
           buildDataPoint(
               modelScores.getScoreDate(), modelScores.getWeighted()
               ));
-      weighted.setLabel(DatasetLabel.WEIGHTED);
+      weighted.setDatasetTag(DatasetTag.WEIGHTED);
+      weighted.setLabel(DatasetTag.WEIGHTED.getLabel());
+      // WEIGHTED DEBIASED
       weightedDebiased.addData(
           buildDataPoint(
               modelScores.getScoreDate(), modelScores.getWeightedDebiased()
               ));
-      weightedDebiased.setLabel(DatasetLabel.WEIGHTED_DEBIASED);
+      weightedDebiased.setDatasetTag(DatasetTag.WEIGHTED_DEBIASED);
+      weightedDebiased.setLabel(DatasetTag.WEIGHTED_DEBIASED.getLabel());
+      // HISTORICAL
       historicalTrend.addData(
           buildDataPoint(
               modelScores.getScoreDate(), modelScores.getHistoricalTrend()
               ));
-      historicalTrend.setLabel(DatasetLabel.HISTORICAL);
+      historicalTrend.setDatasetTag(DatasetTag.HISTORICAL);
+      historicalTrend.setLabel(DatasetTag.HISTORICAL.getLabel());
+      // HISTORICAL LOWER LIMIT
       historicalLower.addData(
           buildDataPoint(
               modelScores.getScoreDate(), modelScores.getHistoricalTrendLower()
               ));
-      historicalLower.setLabel(DatasetLabel.HISTORICAL_LOWER);
+      historicalLower.setDatasetTag(DatasetTag.HISTORICAL_LOWER);
+      historicalLower.setLabel(DatasetTag.HISTORICAL_LOWER.getLabel());
+      // HISTORICAL UPPER LIMIT
       historicalUpper.addData(
           buildDataPoint(
               modelScores.getScoreDate(), modelScores.getHistoricalTrendUpper()
               ));
-      historicalUpper.setLabel(DatasetLabel.HISTORICAL_UPPER);
+      historicalUpper.setDatasetTag(DatasetTag.HISTORICAL_UPPER);
+      historicalUpper.setLabel(DatasetTag.HISTORICAL_UPPER.getLabel());
     }
     Root chartJsRoot = new Root();
     chartJsRoot.setDatasets(

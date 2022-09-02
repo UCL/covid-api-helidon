@@ -14,7 +14,7 @@ import jakarta.inject.Inject;
 import jakarta.ws.rs.client.WebTarget;
 import jakarta.ws.rs.core.Response;
 import uk.ac.ucl.cs.covid.model.chartjs.Dataset;
-import uk.ac.ucl.cs.covid.model.chartjs.DatasetLabel;
+import uk.ac.ucl.cs.covid.model.chartjs.DatasetTag;
 import uk.ac.ucl.cs.covid.model.chartjs.Root;
 
 @HelidonTest
@@ -66,7 +66,25 @@ public class ResourceTest {
       "weighted debiased"
     );
     List<String> actual = response.getDatasets().stream()
-      .map(d -> d.getLabel().toString())
+      .map(d -> d.getDatasetTag().getLabel())
+      .sorted()
+      .toList();
+    assertThat(actual, is(expected));
+  }
+
+  @Test
+  public void testGetDataForCountryJsonTag() {
+    Root response = target.path("/country/GBR/data")
+      .request().get(Root.class);
+    List<String> expected = List.of(
+      "HISTORICAL",
+      "HISTORICAL_LOWER",
+      "HISTORICAL_UPPER",
+      "WEIGHTED",
+      "WEIGHTED_DEBIASED"
+    );
+    List<String> actual = response.getDatasets().stream()
+      .map(d -> d.getDatasetTag().toString())
       .sorted()
       .toList();
     assertThat(actual, is(expected));
