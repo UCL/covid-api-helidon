@@ -8,6 +8,7 @@ import jakarta.enterprise.context.Dependent;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.NotFoundException;
 import uk.ac.ucl.cs.covid.model.CountryTotals;
+import uk.ac.ucl.cs.covid.model.ScoresRow;
 import uk.ac.ucl.cs.covid.model.chartjs.Data;
 import uk.ac.ucl.cs.covid.model.chartjs.Dataset;
 import uk.ac.ucl.cs.covid.model.chartjs.DatasetTag;
@@ -126,5 +127,31 @@ public class ResourceController {
         c.setCasesPer100K(e.getCasesPer100K());
         return c;
       }).collect(Collectors.toList());
+  }
+
+  /**
+   * Constructs a message based on
+   * {@link uk.ac.ucl.cs.covid.model.ScoresRow}.
+   * @param countryCode the ISO A3 code of a country.
+   * @return The response message.
+   */
+  public ScoresRow[] getScores(final String countryCode) {
+    DefaultModelEntity defaultModel = repository
+      .findModel(countryCode)
+      .orElseThrow(NotFoundException::new);
+    ModelEntity model = defaultModel.getModel();
+    List<ModelScoresEntity> scoresList = repository
+      .findAllModelScoresForModelId(model.getId());
+    return scoresList.stream()
+      .map((ModelScoresEntity e) -> {
+        ScoresRow row = new ScoresRow();
+        row.setDate(e.getScoreDate());
+        row.setWeighted(e.getWeighted());
+        row.setWeightedDebiased(e.getWeightedDebiased());
+        row.setHistorical(e.getHistoricalTrend());
+        row.setHistoricalLower(e.getHistoricalTrendLower());
+        row.setHistoricalUpper(e.getHistoricalTrendUpper());
+        return row;
+      }).toArray(ScoresRow[]::new);
   }
 }

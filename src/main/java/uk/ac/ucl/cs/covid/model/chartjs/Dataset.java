@@ -80,6 +80,7 @@ public class Dataset {
 
   /**
    * Sets the label of this dataset.
+   * @param aLabel a String with the label.
    */
   public void setLabel(final String aLabel) {
     this.label = aLabel;

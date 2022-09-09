@@ -13,6 +13,7 @@ import io.helidon.microprofile.tests.junit5.HelidonTest;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.client.WebTarget;
 import jakarta.ws.rs.core.Response;
+import uk.ac.ucl.cs.covid.model.ScoresRow;
 import uk.ac.ucl.cs.covid.model.chartjs.Dataset;
 import uk.ac.ucl.cs.covid.model.chartjs.DatasetTag;
 import uk.ac.ucl.cs.covid.model.chartjs.Root;
@@ -88,6 +89,13 @@ public class ResourceTest {
       .sorted()
       .toList();
     assertThat(actual, is(expected));
+  }
+
+  @Test
+  public void testGetScoresForCountrySize() {
+    ScoresRow[] response = target.path("/country/GBR/table")
+      .request().get(ScoresRow[].class);
+    assertThat(response.length, is(2));
   }
 
   @Test

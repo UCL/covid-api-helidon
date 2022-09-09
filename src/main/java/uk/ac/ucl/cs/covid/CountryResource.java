@@ -8,13 +8,16 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
+import uk.ac.ucl.cs.covid.model.ScoresRow;
 import uk.ac.ucl.cs.covid.model.chartjs.Root;
 
 /**
  * Resource of country specific data.
  * <p>
  * <code>GET /country/{countryCode}/data</code> All model scores for a given
- * country.
+ * country, by dataset.
+ * <code>GET /country/{countryCode}/table</code> Model scores for a given
+ * country, by date.
  * </p>
  */
 @Path("country/{countryCode}")
@@ -57,7 +60,7 @@ public class CountryResource {
   private ResourceController controller;
 
   /**
-   * Retrieve all model scores available for a country.
+   * Retrieve all model scores available for a country, grouped by dataset.
    * @return A JSON message with the scores.
    */
   @Path("data")
@@ -66,4 +69,16 @@ public class CountryResource {
   public Root getDataForCountry() {
     return controller.getChartJsRoot(countryCode);
   }
+
+  /**
+   * Retrieve the model scores available for a country, by date.
+   * @return A JSON message with the scores as an array.
+   */
+  @Path("table")
+  @GET
+  @Produces(MediaType.APPLICATION_JSON)
+  public ScoresRow[] getScoresForCountry() {
+    return controller.getScores(countryCode);
+  }
+
 }
