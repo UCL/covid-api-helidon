@@ -65,4 +65,19 @@ public class Repository {
     return typedQuery.getResultList();
   }
 
+  /**
+   * Query to find the country by its ISO A3 code.
+   * @param countryIsoA3 The ISO A3 code for a country.
+   * @return An {@link Optional} with the country.
+   */
+  public Optional<CountryEntity> findCountry(final String countryIsoA3) {
+    final CriteriaQuery<CountryEntity> query =
+      new CriteriaQueryBuilder(entityManager)
+        .findCountryForCountryIsoA3(countryIsoA3);
+    final TypedQuery<CountryEntity> typedQuery = entityManager
+        .createQuery(query);
+    typedQuery.setMaxResults(1);
+    return typedQuery.getResultStream().findFirst();
+  }
+
 }

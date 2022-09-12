@@ -4,10 +4,16 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * The ChartJS data property of a dataset.
+ * Root object for response containing data by country.
+ * Extension to ChartJS data property of a dataset.
  * See: https://www.chartjs.org/docs/latest/general/data-structures.html
  */
 public class Root {
+
+  /**
+   * The name of the country.
+   */
+  private String country;
 
   /**
    * The collection of datasets.
@@ -29,4 +35,21 @@ public class Root {
   public void setDatasets(final List<Dataset> aDatasetList) {
     this.datasets = Collections.unmodifiableList(aDatasetList);
   }
+
+  /**
+   * Obtains the name of the country.
+   * @return the name of the country.
+   */
+  public String getCountry() {
+    return country;
+  }
+
+  /**
+   * Sets the name of the country.
+   * @param aCountry the country
+   */
+  public void setCountry(final String aCountry) {
+    this.country = aCountry;
+  }
+
 }

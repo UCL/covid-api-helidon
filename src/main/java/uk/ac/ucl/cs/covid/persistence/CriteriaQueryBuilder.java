@@ -62,6 +62,23 @@ public class CriteriaQueryBuilder {
   }
 
   /**
+   * A Criteria API query to retrieve the country based on its ISO A3 code.
+   * @param countryIsoA3 the ISO A3 code of a country.
+   * @return the selected country.
+   */
+  public CriteriaQuery<CountryEntity> findCountryForCountryIsoA3(
+      final String countryIsoA3) {
+    final CriteriaQuery<CountryEntity> query = criteriaBuilder
+        .createQuery(CountryEntity.class);
+    final Root<CountryEntity> root = query.from(CountryEntity.class);
+    final Predicate predicate = criteriaBuilder.equal(
+      root.get(CountryEntityMetamodel.countryIsoA3),
+      countryIsoA3
+    );
+    return query.where(predicate);
+  }
+
+  /**
    * A Criteria API query to retrieve the number of COVID cases per 100K
    * population in a country.
    * @return the select query to retrieve the number of cases per country.
